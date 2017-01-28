@@ -44,7 +44,6 @@ public class Simulator {
         ////// TIMER CODE START
         tickTimer = new Timer(1, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                tickTimer.setDelay(1); // Bepaald de snelheid per tick in miliseconde
                 if (tickAmount <= maxTicks) {
                     tick();
                     tickAmount++;
@@ -54,7 +53,7 @@ public class Simulator {
         /////   TIMER CODE END
 
         tickTimer.start();
-        tickTimer.setDelay(1);
+        tickTimer.setDelay(100);
     }
 
     public static int getTicks() {

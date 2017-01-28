@@ -42,6 +42,7 @@ public class SimulatorView extends JFrame implements ActionListener {
         carParkView.setBounds(0, 0, parkViewWidth, parkViewHeight ); // TODO: ERVOOR ZORGEN DAT DE GROOTE ZICH AANPAST OP DE HOEVEELHEID VERDIEPINGEN / FLOORS / PLACES.
         pack();
         addControlPanel(); // VOEGT DE KNOPPEN TOE
+        addSpeedController(); // VOEGT SNELHEIDS REGELAARS TOE
 
         updateView();
     }
@@ -63,9 +64,12 @@ public class SimulatorView extends JFrame implements ActionListener {
     // ---- VIEW  section ---- //
     private JLabel backGround;
     private JButton resumeButton;
-    private JLabel statusLabel;
-    private JLabel tickCounter;
-    private String tickAmountString;
+    protected JLabel statusLabel;
+    protected JLabel tickCounter;
+    protected static JLabel speedIndicator;
+    protected String tickAmountString;
+    protected static int currentSpeedStep;
+    protected static String currentSpeed;
 
     public void setEssentials() { // Bepaald de window size gebasseerd op de grote van de carParkView + 100.
         backGround = new JLabel();
@@ -125,10 +129,43 @@ public class SimulatorView extends JFrame implements ActionListener {
         add(buttonPanel);
     }
 
+    public void addSpeedController() {
+        int speedPosX = parkViewWidth -275;
+        int speedPosY = parkViewHeight;
+        currentSpeedStep = 3;
+        currentSpeed = "1x";
+
+        JPanel speedPanel = new JPanel();
+        speedPanel.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        speedPanel.setLayout(new FlowLayout());
+        speedPanel.setBounds(speedPosX, speedPosY, 300, 100);
+
+        JButton speedUp = new JButton(">>");
+        speedUp.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                speedUpButtonPressed();
+            } } );
+
+        JButton speedDown = new JButton("<<");
+        speedDown.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                speedDownButtonPressed();
+            } } );
+
+        speedIndicator = new JLabel("Huidige snelheid: " + currentSpeed);
+
+        speedPanel.add(speedDown);
+        speedPanel.add(speedIndicator);
+        speedPanel.add(speedUp);
+
+        add(speedPanel);
+    }
 
     // ---- end VIEW section ---- //
 
     // ---- CONTROLLER section ---- //
+
+
     public void resumeButtonPressed() {
         SimulatorModel.startTimer();
         setStatus("Actief!");
@@ -148,6 +185,21 @@ public class SimulatorView extends JFrame implements ActionListener {
     public void updateTicks() {
         tickAmountString = Integer.toString(Simulator.getTicks());
         tickCounter.setText(tickAmountString);
+    }
+    public void speedDownButtonPressed() {
+            currentSpeedStep--;
+            SimulatorModel.checkSpeed();
+        if (currentSpeedStep == 0) {
+            currentSpeedStep = currentSpeedStep +1;
+        }
+    }
+
+    public void speedUpButtonPressed() {
+            currentSpeedStep++;
+            SimulatorModel.checkSpeed();
+            if (currentSpeedStep == 8) {
+                currentSpeedStep = currentSpeedStep -1;
+        }
     }
 
     // ---- end CONTROLLER section ---- \\
