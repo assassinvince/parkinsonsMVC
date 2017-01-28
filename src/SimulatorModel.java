@@ -5,6 +5,10 @@ public class SimulatorModel {
     private Simulator simulator;
     private SimulatorView simulatorView;
 
+    private int day = 1;
+    private int hour = 12;
+    private int minute = 0;
+
     public static void startTimer() { Simulator.tickTimer.start();
 
     }
@@ -47,5 +51,48 @@ public class SimulatorModel {
     }
         Simulator.tickTimer.setDelay(Simulator.tickDelay);
     }
+
+    public void advanceTime(){
+        String cDay = "";
+        String cMinute = Integer.toString(minute);
+
+        minute++;
+        while (minute > 59) {
+            minute -= 60;
+            hour++;
+        }
+        while (hour > 23) {
+            hour -= 24;
+            day++;
+        }
+        while (day > 6) {
+            day -= 7;
+        }
+
+
+        if (day == 1) {
+            cDay = "Maandag";
+        } else if (day == 2) {
+            cDay = "Dinsdag";
+        } else if (day == 3) {
+            cDay = "Woensdag";
+        } else if (day == 4) {
+            cDay = "Donderdag";
+        } else if (day == 5) {
+            cDay = "Vrijdag";
+        } else if (day == 6) {
+            cDay = "Zaterdag";
+        } else if (day == 7) {
+            cDay = "Zondag";
+        }
+
+        if (minute <= 10) { // Zorgt ervoor dat er een 0 bij staat als de minuut nog een enkel getal is
+            cMinute = "0" + cMinute;
+        }
+
+        SimulatorView.setTime(("Tijd : " + cDay + " " + hour + ":" + cMinute));
+
+    }
+
     }
 

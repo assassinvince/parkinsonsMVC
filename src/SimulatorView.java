@@ -28,7 +28,7 @@ public class SimulatorView extends JFrame implements ActionListener {
 
         parkViewWidth = 900;
         parkViewHeight = 400;
-        frameWidth = parkViewWidth;
+        frameWidth = parkViewWidth + 165;
         frameHeight = parkViewHeight + 70;
         legacyCars = new LegacyCar[numberOfFloors][numberOfRows][numberOfPlaces];
         setEssentials();
@@ -42,7 +42,7 @@ public class SimulatorView extends JFrame implements ActionListener {
         pack();
         addControlPanel(); // VOEGT DE KNOPPEN TOE
         addSpeedController(); // VOEGT SNELHEIDS REGELAARS TOE
-        // addStats(); // VOEGT STATUSSEN TOE AAN DE BOVENKANT
+        addStats(); // VOEGT STATUSSEN TOE AAN DE BOVENKANT
 
         updateView();
     }
@@ -66,6 +66,7 @@ public class SimulatorView extends JFrame implements ActionListener {
     private JButton resumeButton;
     protected JLabel statusLabel;
     protected JLabel tickCounter;
+    protected static JLabel time;
     protected static JLabel speedIndicator;
     protected String tickAmountString;
     protected static int currentSpeedStep;
@@ -120,8 +121,11 @@ public class SimulatorView extends JFrame implements ActionListener {
         statsButton.setBackground(new Color(92, 92, 92));
         statsButton.setForeground(new Color( 255, 255, 255));
 
+
         statusLabel = new JLabel("");
         statusLabel.setText("Actief!");
+
+        time = new JLabel("");
 
 
         tickCounter = new JLabel(tickAmountString);
@@ -131,6 +135,7 @@ public class SimulatorView extends JFrame implements ActionListener {
         buttonPanel.add(resumeButton);
         buttonPanel.add(tickCounter);
         buttonPanel.add(statsButton);
+        buttonPanel.add(time);
 
         add(buttonPanel);
     }
@@ -173,19 +178,43 @@ public class SimulatorView extends JFrame implements ActionListener {
 
     public void addStats() {
 
-        JPanel statusIndicators = new JPanel();
+        int sideBarLocationY = parkViewHeight - 390;
+        int sideBarLocationX = parkViewWidth + 10;
 
-        statusIndicators.setAlignmentX(JComponent.LEFT_ALIGNMENT);
-        statusIndicators.setLayout(new FlowLayout(FlowLayout.LEFT));
-        statusIndicators.setBounds(700, 0, 200, 600);
-        statusIndicators.setBackground(Color.WHITE);
-        add(statusIndicators);
+        JPanel sideBar = new JPanel();
+        sideBar.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        sideBar.setLayout(new FlowLayout(FlowLayout.LEFT));
+        sideBar.setBounds(sideBarLocationX, sideBarLocationY, 150, 400);
+        sideBar.setBackground(Color.WHITE);
+
+        JButton configButton = new JButton("Configuratie Menu");
+        configButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                statsButtonPressed();
+            } } );
+        configButton.setBackground(new Color(92, 92, 92));
+        configButton.setForeground(new Color( 255, 255, 255));
+
+        time = new JLabel("");
+        JLabel parkedCars = new JLabel("geparkeerde auto's: <> ");
+        JLabel freeSpots = new JLabel("vrije plekken: <>    ");
+        JLabel carQueue = new JLabel("In de rij:  <>   ");
+        sideBar.add(time);
+        sideBar.add(parkedCars);
+        sideBar.add(freeSpots);
+        sideBar.add(carQueue);
+        sideBar.add(configButton);
+        add(sideBar);
         }
 
     // ---- end VIEW section ---- //
 
     // ---- CONTROLLER section ---- //
 
+
+    public static void setTime(String string) {
+        time.setText(string);
+    }
 
     public void resumeButtonPressed() {
         SimulatorModel.startTimer();
@@ -357,6 +386,7 @@ public class SimulatorView extends JFrame implements ActionListener {
         private JLabel Status;
 
         public Dimension getPreferredSize() {
+
             return new Dimension(800, 500);
         }
 

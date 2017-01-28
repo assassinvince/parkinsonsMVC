@@ -2,7 +2,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.Random;
 import javax.swing.*;
-public class Simulator {
+public class Simulator extends SimulatorModel {
 
 	private static final String AD_HOC = "1";
 	private static final String PASS = "2";
@@ -35,6 +35,7 @@ public class Simulator {
     protected static Timer tickTimer;
 
     public Simulator() {
+
         entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
@@ -48,7 +49,8 @@ public class Simulator {
                     tick();
                     tickAmount++;
                     simulatorView.updateTicks();
-                } }
+                }
+            }
         });
         /////   TIMER CODE END
 
@@ -60,28 +62,12 @@ public class Simulator {
         return tickAmount;
     }
 
+
     private void tick() {
     	advanceTime();
     	handleExit();
     	updateViews();
     	handleEntrance();
-    }
-
-    private void advanceTime(){
-        // Advance the time by one minute.
-        minute++;
-        while (minute > 59) {
-            minute -= 60;
-            hour++;
-        }
-        while (hour > 23) {
-            hour -= 24;
-            day++;
-        }
-        while (day > 6) {
-            day -= 7;
-        }
-
     }
 
     private void handleEntrance(){
