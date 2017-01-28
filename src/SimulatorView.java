@@ -29,7 +29,7 @@ public class SimulatorView extends JFrame implements ActionListener {
         parkViewWidth = 900;
         parkViewHeight = 400;
         frameWidth = parkViewWidth;
-        frameHeight = parkViewHeight + 100;
+        frameHeight = parkViewHeight + 70;
         legacyCars = new LegacyCar[numberOfFloors][numberOfRows][numberOfPlaces];
         setEssentials();
 
@@ -72,11 +72,9 @@ public class SimulatorView extends JFrame implements ActionListener {
     protected static String currentSpeed;
 
     public void setEssentials() { // Bepaald de window size gebasseerd op de grote van de carParkView + 100.
-        backGround = new JLabel();
         setTitle("Parking Simulator v0.1");
         setResizable(false);
-        add(backGround);
-        backGround.setBounds(0, 0, frameWidth, frameHeight);
+        setBackground(new Color(112, 112, 112));
         setLayout(null);
         this.setPreferredSize(new Dimension(frameWidth, frameHeight));
         setVisible(true);
@@ -103,12 +101,24 @@ public class SimulatorView extends JFrame implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             stopButtonPressed();
         } } );
+        pauseButton.setBackground(new Color(92, 92, 92));
+        pauseButton.setForeground(new Color( 255, 255, 255));
 
         JButton resumeButton = new JButton("Resume");
         resumeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 resumeButtonPressed();
             } } );
+        resumeButton.setBackground(new Color(92, 92, 92));
+        resumeButton.setForeground(new Color( 255, 255, 255));
+
+        JButton statsButton = new JButton("Statistieken");
+        statsButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                statsButtonPressed();
+            } } );
+        statsButton.setBackground(new Color(92, 92, 92));
+        statsButton.setForeground(new Color( 255, 255, 255));
 
         statusLabel = new JLabel("");
         statusLabel.setText("Actief!");
@@ -120,6 +130,7 @@ public class SimulatorView extends JFrame implements ActionListener {
         buttonPanel.add(pauseButton);
         buttonPanel.add(resumeButton);
         buttonPanel.add(tickCounter);
+        buttonPanel.add(statsButton);
 
         add(buttonPanel);
     }
@@ -140,12 +151,16 @@ public class SimulatorView extends JFrame implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 speedUpButtonPressed();
             } } );
+        speedUp.setBackground(new Color(92, 92, 92));
+        speedUp.setForeground(new Color( 255, 255, 255));
 
         JButton speedDown = new JButton("<<");
         speedDown.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 speedDownButtonPressed();
             } } );
+        speedDown.setBackground(new Color(92, 92, 92));
+        speedDown.setForeground(new Color( 255, 255, 255));
 
         speedIndicator = new JLabel("Huidige snelheid: " + currentSpeed);
 
@@ -182,6 +197,10 @@ public class SimulatorView extends JFrame implements ActionListener {
         SimulatorModel.stopTimer();
         setStatus("Gepauseerd!");
         statusLabel.setForeground(new java.awt.Color(255, 0, 0));
+    }
+
+    public void statsButtonPressed() {
+        System.out.println("Werkt nog niet!");
     }
 
     public void setStatus(String string) {
