@@ -29,10 +29,10 @@ public class Simulator {
     int paymentSpeed = 7; // number of cars that can pay per minute
     int exitSpeed = 5; // number of cars that can leave per minute
 
-    int tickAmount = 0;
+    static int tickAmount = 0;
     int maxTicks = 10000;
 
-    private Timer tickTimer;
+    protected static Timer tickTimer;
 
     public Simulator() {
         entranceCarQueue = new CarQueue();
@@ -47,12 +47,18 @@ public class Simulator {
                 tickTimer.setDelay(1); // Bepaald de snelheid per tick in miliseconde
                 if (tickAmount <= maxTicks) {
                     tick();
+                    tickAmount++;
+                    simulatorView.updateTicks();
                 } }
         });
         /////   TIMER CODE END
 
         tickTimer.start();
         tickTimer.setDelay(1);
+    }
+
+    public static int getTicks() {
+        return tickAmount;
     }
 
     private void tick() {
