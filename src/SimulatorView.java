@@ -2,10 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
 
 public class SimulatorView extends JFrame implements ActionListener {
     private CarParkView carParkView;
     private Simulator simulator;
+    private CarQueue carQueue;
     private int numberOfFloors;
     private int numberOfRows;
     private int numberOfPlaces;
@@ -27,10 +29,9 @@ public class SimulatorView extends JFrame implements ActionListener {
 
         parkViewWidth = 900;
         parkViewHeight = 400;
-        frameWidth = parkViewWidth + 50;
+        frameWidth = parkViewWidth;
         frameHeight = parkViewHeight + 100;
         setEssentials();
-
         legacyCars = new LegacyCar[numberOfFloors][numberOfRows][numberOfPlaces];
 
 
@@ -43,6 +44,7 @@ public class SimulatorView extends JFrame implements ActionListener {
         pack();
         addControlPanel(); // VOEGT DE KNOPPEN TOE
         addSpeedController(); // VOEGT SNELHEIDS REGELAARS TOE
+        // addStats(); // VOEGT STATUSSEN TOE AAN DE BOVENKANT
 
         updateView();
     }
@@ -74,6 +76,8 @@ public class SimulatorView extends JFrame implements ActionListener {
     public void setEssentials() { // Bepaald de window size gebasseerd op de grote van de carParkView + 100.
         backGround = new JLabel();
         backGround.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/background.jpg")));
+        setTitle("Parking Simulator v0.1");
+        setResizable(false);
         add(backGround);
         backGround.setBounds(0, 0, frameWidth, frameHeight);
         setLayout(null);
@@ -84,8 +88,7 @@ public class SimulatorView extends JFrame implements ActionListener {
     public void addControlPanel() { // Voegt de control panel toe die zicht schaalt aan de grote van het interface
         tickAmountString = Integer.toString(Simulator.getTicks());
 
-        int panelSizeHeight = 50;
-        int panelSizeWidth = 600;
+        int panelSizeHeight = 150;
 
         int panelHeightPos = parkViewHeight;
         int panelWidthPos = 0;
@@ -93,9 +96,9 @@ public class SimulatorView extends JFrame implements ActionListener {
 
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
-        buttonPanel.setLayout(new FlowLayout());
-        buttonPanel.setBounds(panelWidthPos, panelHeightPos, panelSizeWidth, panelSizeHeight);
+        buttonPanel.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        buttonPanel.setBounds(panelWidthPos, panelHeightPos, 800, panelSizeHeight);
 
 
         JButton pauseButton = new JButton("Stop");
@@ -110,35 +113,30 @@ public class SimulatorView extends JFrame implements ActionListener {
                 resumeButtonPressed();
             } } );
 
-        JLabel statusStaticLabel = new JLabel("Status: ");
-
         statusLabel = new JLabel("");
         statusLabel.setText("Actief!");
 
-        JLabel tickLabelStatic = new JLabel("Uitgevoerde ticks: ");
 
         tickCounter = new JLabel(tickAmountString);
 
-        buttonPanel.add(statusStaticLabel);
         buttonPanel.add(statusLabel);
         buttonPanel.add(pauseButton);
         buttonPanel.add(resumeButton);
-        buttonPanel.add(tickLabelStatic);
         buttonPanel.add(tickCounter);
 
         add(buttonPanel);
     }
 
     public void addSpeedController() {
-        int speedPosX = parkViewWidth -275;
+        int speedPosX = parkViewWidth -245;
         int speedPosY = parkViewHeight;
         currentSpeedStep = 3;
         currentSpeed = "1x";
 
         JPanel speedPanel = new JPanel();
         speedPanel.setAlignmentX(JComponent.LEFT_ALIGNMENT);
-        speedPanel.setLayout(new FlowLayout());
-        speedPanel.setBounds(speedPosX, speedPosY, 300, 100);
+        speedPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        speedPanel.setBounds(speedPosX, speedPosY, 250, 150);
 
         JButton speedUp = new JButton(">>");
         speedUp.addActionListener(new ActionListener() {
@@ -161,6 +159,17 @@ public class SimulatorView extends JFrame implements ActionListener {
         add(speedPanel);
     }
 
+    public void addStats() {
+
+        JPanel statusIndicators = new JPanel();
+
+        statusIndicators.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        statusIndicators.setLayout(new FlowLayout(FlowLayout.LEFT));
+        statusIndicators.setBounds(700, 0, 200, 600);
+        statusIndicators.setBackground(Color.WHITE);
+        add(statusIndicators);
+        }
+
     // ---- end VIEW section ---- //
 
     // ---- CONTROLLER section ---- //
@@ -179,12 +188,12 @@ public class SimulatorView extends JFrame implements ActionListener {
     }
 
     public void setStatus(String string) {
-        statusLabel.setText(string);
+        statusLabel.setText("Status: " + string);
     }
 
     public void updateTicks() {
         tickAmountString = Integer.toString(Simulator.getTicks());
-        tickCounter.setText(tickAmountString);
+        tickCounter.setText("Aantal ticks: " + tickAmountString);
     }
     public void speedDownButtonPressed() {
             currentSpeedStep--;
@@ -329,12 +338,13 @@ public class SimulatorView extends JFrame implements ActionListener {
             size = new Dimension(0, 0);
         }
 
-        /**
-         * Overridden. Tell the GUI manager how big we would like to be.
-         */
+        private JLabel Status;
+
         public Dimension getPreferredSize() {
             return new Dimension(800, 500);
         }
+
+
 
         /**
          * Overriden. The car park view component needs to be redisplayed. Copy the
