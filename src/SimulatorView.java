@@ -111,7 +111,7 @@ public class SimulatorView extends JFrame implements ActionListener {
         statusLabel = new JLabel("");
         statusLabel.setText("Actief!");
 
-        JLabel tickLabelStatic = new JLabel("Executed ticks: ");
+        JLabel tickLabelStatic = new JLabel("Uitgevoerde ticks: ");
 
         tickCounter = new JLabel(tickAmountString);
 
@@ -131,12 +131,14 @@ public class SimulatorView extends JFrame implements ActionListener {
     // ---- CONTROLLER section ---- //
     public void resumeButtonPressed() {
         SimulatorModel.startTimer();
-        setStatus("Active!");
+        setStatus("Actief!");
+        statusLabel.setForeground(new java.awt.Color(0, 155, 0));
     }
 
     public void stopButtonPressed() {
         SimulatorModel.stopTimer();
-        setStatus("Stopped!");
+        setStatus("Gepauseerd!");
+        statusLabel.setForeground(new java.awt.Color(255, 0, 0));
     }
 
     public void setStatus(String string) {
