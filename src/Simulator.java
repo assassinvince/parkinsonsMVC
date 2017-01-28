@@ -18,7 +18,7 @@ public class Simulator {
     private int hour = 0;
     private int minute = 0;
 
-    private int tickPause = 100;
+    protected static int tickDelay = 125;
 
     int weekDayArrivals= 100; // average number of arriving cars per hour
     int weekendArrivals = 200; // average number of arriving cars per hour
@@ -53,7 +53,7 @@ public class Simulator {
         /////   TIMER CODE END
 
         tickTimer.start();
-        tickTimer.setDelay(100);
+        tickTimer.setDelay(tickDelay);
     }
 
     public static int getTicks() {
