@@ -1,7 +1,5 @@
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.util.Random;
-import javax.swing.*;
+
 public class Simulator {
 
 	private static final String AD_HOC = "1";
@@ -29,36 +27,30 @@ public class Simulator {
     int paymentSpeed = 7; // number of cars that can pay per minute
     int exitSpeed = 5; // number of cars that can leave per minute
 
-    int tickAmount = 0;
-    int maxTicks = 10000;
-
-    private Timer tickTimer;
-
     public Simulator() {
         entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
         simulatorView = new SimulatorView(3, 6, 30);
+    }
 
-        ////// TIMER CODE START
-        tickTimer = new Timer(1, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                tickTimer.setDelay(1); // Bepaald de snelheid per tick in miliseconde
-                if (tickAmount <= maxTicks) {
-                    tick();
-                } }
-        });
-        /////   TIMER CODE END
-
-        tickTimer.start();
-        tickTimer.setDelay(1);
+    public void run() {
+        for (int i = 0; i < 10000; i++) {
+            tick();
+        }
     }
 
     private void tick() {
     	advanceTime();
     	handleExit();
     	updateViews();
+    	// Pause.
+        try {
+            Thread.sleep(tickPause);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     	handleEntrance();
     }
 

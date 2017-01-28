@@ -1,11 +1,31 @@
 package net.Parkinsons.parking.model;
 
 // TODO: Implement
+
+
+import java.util.Objects;
+
 public class GarageImpl implements Garage {
+    private Car[][][] Cars;
+
+    private Location findSpot (Car Car) {
+        for (int i = 0; i < Cars.length; i++) {
+            for (int j = 0; j <Cars[i].length ; j++) {
+                for (int k = 0; k < Cars[i][j].length; k++) {
+                   if (Objects.equals(Car, Cars[i][j][k])){
+                       return new Location(i, j, k);
+                   }
+                }
+            }
+        }
+        return null;
+    }
 
     @Override
     public boolean addCar(Car car) {
-        return false;
+
+
+            return false;
     }
 
     @Override
@@ -31,5 +51,12 @@ public class GarageImpl implements Garage {
     @Override
     public Car getCarAt(Location location) {
         return null;
+    }
+
+    @Override
+    public Location  addCar (Car car ) {
+        Location Location = findSpot  (null);
+        setCarAt(car, Location);
+        return Location;
     }
 }
