@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
 
 public class SimulatorView extends JFrame implements ActionListener {
     private CarParkView carParkView;
@@ -31,9 +30,8 @@ public class SimulatorView extends JFrame implements ActionListener {
         parkViewHeight = 400;
         frameWidth = parkViewWidth;
         frameHeight = parkViewHeight + 100;
-        setEssentials();
         legacyCars = new LegacyCar[numberOfFloors][numberOfRows][numberOfPlaces];
-
+        setEssentials();
 
         carParkView = new CarParkView();
 
@@ -75,7 +73,6 @@ public class SimulatorView extends JFrame implements ActionListener {
 
     public void setEssentials() { // Bepaald de window size gebasseerd op de grote van de carParkView + 100.
         backGround = new JLabel();
-        backGround.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/background.jpg")));
         setTitle("Parking Simulator v0.1");
         setResizable(false);
         add(backGround);
@@ -128,7 +125,7 @@ public class SimulatorView extends JFrame implements ActionListener {
     }
 
     public void addSpeedController() {
-        int speedPosX = parkViewWidth -245;
+        int speedPosX = parkViewWidth -275;
         int speedPosY = parkViewHeight;
         currentSpeedStep = 3;
         currentSpeed = "1x";
