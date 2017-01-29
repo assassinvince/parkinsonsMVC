@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3711a688-037f-4045-aa64-a085ea609224" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/Parkinsons/parking/model/GarageImpl.java" afterPath="$PROJECT_DIR$/src/net/Parkinsons/parking/model/GarageImpl.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -793,7 +792,7 @@
       <option name="presentableId" value="Default" />
       <updated>1485552147849</updated>
       <workItem from="1485628871456" duration="505000" />
-      <workItem from="1485703814929" duration="4744000" />
+      <workItem from="1485703814929" duration="4786000" />
     </task>
     <task id="LOCAL-00001" summary="idea fixed findspot added location + gitignore">
       <created>1485629100474</created>
@@ -816,11 +815,18 @@
       <option name="project" value="LOCAL" />
       <updated>1485706879598</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="getcar getrows getspots getplaces implemented">
+      <created>1485711161336</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1485711161336</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5249000" />
+    <option name="totallyTimeSpent" value="5291000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -867,7 +873,8 @@
     <MESSAGE value="idea fixed findspot added location + gitignore" />
     <MESSAGE value=" findspot added location added back" />
     <MESSAGE value="setcar addcar removecar implemented + garagejava fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="setcar addcar removecar implemented + garagejava fix" />
+    <MESSAGE value="getcar getrows getspots getplaces implemented" />
+    <option name="LAST_COMMIT_MESSAGE" value="getcar getrows getspots getplaces implemented" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
