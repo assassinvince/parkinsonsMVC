@@ -1,13 +1,21 @@
+import javax.swing.*;
+
 /**
  * Created by wesle on 28-1-2017.
  */
-public class SimulatorModel {
+public class SimulatorModel extends CarQueue {
     private Simulator simulator;
     private SimulatorView simulatorView;
+    private CarQueue carQueue;
 
     private int day = 1;
     private int hour = 12;
     private int minute = 0;
+
+    protected static String cDay;
+
+    public SimulatorModel() {
+    }
 
     public static void startTimer() { Simulator.tickTimer.start();
 
@@ -47,9 +55,8 @@ public class SimulatorModel {
     }
 
     public void advanceTime(){
-        String cDay = "";
+        cDay = "";
         String cMinute = Integer.toString(minute);
-
         minute++;
         while (minute > 59) {
             minute -= 60;

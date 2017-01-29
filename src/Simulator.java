@@ -14,16 +14,16 @@ public class Simulator extends SimulatorModel {
     private CarQueue exitCarQueue;
     private SimulatorView simulatorView;
 
-    private int day = 0;
+    private static int day = 0;
     private int hour = 0;
     private int minute = 0;
 
     protected static int tickDelay = 125;
 
-    int weekDayArrivals= 100; // average number of arriving cars per hour
-    int weekendArrivals = 200; // average number of arriving cars per hour
-    int weekDayPassArrivals= 50; // average number of arriving cars per hour
-    int weekendPassArrivals = 5; // average number of arriving cars per hour
+    static int weekDayArrivals= 100; // average number of arriving cars per hour
+    static int weekendArrivals = 200; // average number of arriving cars per hour
+    static int weekDayPassArrivals= 50; // average number of arriving cars per hour
+    static int weekendPassArrivals = 500; // average number of arriving cars per hour
 
     int enterSpeed = 3; // number of cars that can enter per minute
     int paymentSpeed = 7; // number of cars that can pay per minute
@@ -143,7 +143,7 @@ public class Simulator extends SimulatorModel {
     	}	
     }
     
-    private int getNumberOfCars(int weekDay, int weekend){
+    public static int getNumberOfCars(int weekDay, int weekend){
         Random random = new Random();
 
         // Get the average number of cars that arrive per hour.
@@ -152,7 +152,7 @@ public class Simulator extends SimulatorModel {
                 : weekend;
 
         // Calculate the number of cars that arrive this minute.
-        double standardDeviation = averageNumberOfCarsPerHour * 0.3;
+        double standardDeviation = averageNumberOfCarsPerHour * 0.5;
         double numberOfCarsPerHour = averageNumberOfCarsPerHour + random.nextGaussian() * standardDeviation;
         return (int)Math.round(numberOfCarsPerHour / 60);	
     }

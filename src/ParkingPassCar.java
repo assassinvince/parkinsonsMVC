@@ -2,7 +2,7 @@ import java.util.Random;
 import java.awt.*;
 
 public class ParkingPassCar extends LegacyCar {
-	private static final Color COLOR=Color.blue;
+	private static final Color COLOR=Color.cyan;
 	
     public ParkingPassCar() {
     	Random random = new Random();
@@ -10,7 +10,9 @@ public class ParkingPassCar extends LegacyCar {
         this.setMinutesLeft(stayMinutes);
         this.setHasToPay(false);
     }
-    
+
+
+
     public Color getColor(){
     	return COLOR;
     }

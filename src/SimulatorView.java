@@ -43,7 +43,6 @@ public class SimulatorView extends JFrame implements ActionListener {
         addControlPanel(); // VOEGT DE KNOPPEN TOE
         addSpeedController(); // VOEGT SNELHEIDS REGELAARS TOE
         addStats(); // VOEGT STATUSSEN TOE AAN DE BOVENKANT
-
         updateView();
     }
 
@@ -67,6 +66,7 @@ public class SimulatorView extends JFrame implements ActionListener {
     private JButton statusChanger;
     private Boolean whichStatus = false;
     protected JLabel tickCounter;
+    protected static JLabel parkedCars;
     protected static JLabel time;
     protected static JLabel speedIndicator;
     protected String tickAmountString;
@@ -98,12 +98,12 @@ public class SimulatorView extends JFrame implements ActionListener {
         buttonPanel.setBounds(panelWidthPos, panelHeightPos, 800, panelSizeHeight);
 
 
-        statusChanger = new JButton("Stop");
+        statusChanger = new JButton("Pauzeer");
         statusChanger.addActionListener(e -> statusChangerButtonPressed());
         statusChanger.setBackground(new Color(92, 92, 92));
         statusChanger.setForeground(new Color( 255, 255, 255));
 
-        statusLabel = new JLabel("Status: Actief");
+        statusLabel = new JLabel("Status: Actief   ");
         statusLabel.setForeground(new java.awt.Color(0, 155, 0));
 
         time = new JLabel("");
@@ -175,7 +175,7 @@ public class SimulatorView extends JFrame implements ActionListener {
         configButton.setForeground(new Color( 255, 255, 255));
 
         time = new JLabel("");
-        JLabel parkedCars = new JLabel("geparkeerde auto's: <> ");
+        parkedCars = new JLabel("geparkeerde auto's:  ");
         JLabel freeSpots = new JLabel("vrije plekken: <>    ");
         JLabel carQueue = new JLabel("In de rij:  <>   ");
         sideBar.add(time);
@@ -190,7 +190,6 @@ public class SimulatorView extends JFrame implements ActionListener {
 
     // ---- CONTROLLER section ---- //
 
-
     public static void setTime(String string) {
         time.setText(string);
     }
@@ -199,14 +198,14 @@ public class SimulatorView extends JFrame implements ActionListener {
         whichStatus =! whichStatus;
         if (whichStatus == false) {
             SimulatorModel.startTimer();
-            setStatus("Actief!");
+            setStatus("Actief!  ");
             statusLabel.setForeground(new java.awt.Color(0, 155, 0));
-            statusChanger.setText("Pauseer");
+            statusChanger.setText("Pauzeer");
         } else {
             SimulatorModel.stopTimer();
             setStatus("Gestopt!");
             statusLabel.setForeground(new java.awt.Color(155, 0, 0));
-            statusChanger.setText("Hervat");
+            statusChanger.setText("Hervat  ");
         }
 
     }
