@@ -4,9 +4,15 @@ import java.util.Objects;
 
 // TODO: Implement
 public class GarageImpl implements Garage {
+    private final int floors;
+    private final int rows;
+    private final int places;
     private Car[][][] Cars;
 
     public GarageImpl(int floors, int rows, int places) {
+        this.floors = floors;
+        this.rows = rows;
+        this.places = places;
         assert floors > 0 && rows > 0 && places > 0;
         Cars = new Car[floors][rows][places];
 
@@ -51,24 +57,22 @@ public class GarageImpl implements Garage {
 
     @Override
     public int getNumberOfFloors() {
-        return 0;
+        return floors;
     }
 
     @Override
     public int getNumberOfRowsPerFloor() {
-        return 0;
+        return rows;
     }
 
     @Override
     public int getNumberOfPlacesPerRow() {
-        return 0;
+        return places;
     }
 
     @Override
-    private boolean getCarAt(Location location) {
-        return null;
+    public Car getCarAt(Location location) {
+        return Cars[location.i][location.j][location.k];
+
     }
-
-
-}
 }
