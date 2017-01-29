@@ -56,15 +56,16 @@ public class SimulatorView extends JFrame implements ActionListener {
 
     // ---- MODEL section ----//
 
+    // ZIE SIMULATORMODEL \\
 
     // ---- end MODEL section ---- //
 
 
 
     // ---- VIEW  section ---- //
-    private JLabel backGround;
-    private JButton resumeButton;
     protected JLabel statusLabel;
+    private JButton statusChanger;
+    private Boolean whichStatus = false;
     protected JLabel tickCounter;
     protected static JLabel time;
     protected static JLabel speedIndicator;
@@ -72,7 +73,7 @@ public class SimulatorView extends JFrame implements ActionListener {
     protected static int currentSpeedStep;
     protected static String currentSpeed;
 
-    public void setEssentials() { // Bepaald de window size gebasseerd op de grote van de carParkView + 100.
+    private void setEssentials() { // Bepaald de window size gebasseerd op de grote van de carParkView + 100.
         setTitle("Parking Simulator v0.1");
         setResizable(false);
         setBackground(new Color(112, 112, 112));
@@ -97,33 +98,13 @@ public class SimulatorView extends JFrame implements ActionListener {
         buttonPanel.setBounds(panelWidthPos, panelHeightPos, 800, panelSizeHeight);
 
 
-        JButton pauseButton = new JButton("Stop");
-        pauseButton.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-            stopButtonPressed();
-        } } );
-        pauseButton.setBackground(new Color(92, 92, 92));
-        pauseButton.setForeground(new Color( 255, 255, 255));
+        statusChanger = new JButton("Stop");
+        statusChanger.addActionListener(e -> statusChangerButtonPressed());
+        statusChanger.setBackground(new Color(92, 92, 92));
+        statusChanger.setForeground(new Color( 255, 255, 255));
 
-        JButton resumeButton = new JButton("Resume");
-        resumeButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                resumeButtonPressed();
-            } } );
-        resumeButton.setBackground(new Color(92, 92, 92));
-        resumeButton.setForeground(new Color( 255, 255, 255));
-
-        JButton statsButton = new JButton("Statistieken");
-        statsButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                statsButtonPressed();
-            } } );
-        statsButton.setBackground(new Color(92, 92, 92));
-        statsButton.setForeground(new Color( 255, 255, 255));
-
-
-        statusLabel = new JLabel("");
-        statusLabel.setText("Actief!");
+        statusLabel = new JLabel("Status: Actief");
+        statusLabel.setForeground(new java.awt.Color(0, 155, 0));
 
         time = new JLabel("");
 
@@ -131,16 +112,14 @@ public class SimulatorView extends JFrame implements ActionListener {
         tickCounter = new JLabel(tickAmountString);
 
         buttonPanel.add(statusLabel);
-        buttonPanel.add(pauseButton);
-        buttonPanel.add(resumeButton);
+        buttonPanel.add(statusChanger);
         buttonPanel.add(tickCounter);
-        buttonPanel.add(statsButton);
         buttonPanel.add(time);
 
         add(buttonPanel);
     }
 
-    public void addSpeedController() {
+    private void addSpeedController() {
         int speedPosX = parkViewWidth -275;
         int speedPosY = parkViewHeight;
         currentSpeedStep = 3;
@@ -176,7 +155,7 @@ public class SimulatorView extends JFrame implements ActionListener {
         add(speedPanel);
     }
 
-    public void addStats() {
+    private void addStats() {
 
         int sideBarLocationY = parkViewHeight - 390;
         int sideBarLocationX = parkViewWidth + 10;
@@ -216,19 +195,23 @@ public class SimulatorView extends JFrame implements ActionListener {
         time.setText(string);
     }
 
-    public void resumeButtonPressed() {
-        SimulatorModel.startTimer();
-        setStatus("Actief!");
-        statusLabel.setForeground(new java.awt.Color(0, 155, 0));
+    public void statusChangerButtonPressed() {
+        whichStatus =! whichStatus;
+        if (whichStatus == false) {
+            SimulatorModel.startTimer();
+            setStatus("Actief!");
+            statusLabel.setForeground(new java.awt.Color(0, 155, 0));
+            statusChanger.setText("Pauseer");
+        } else {
+            SimulatorModel.stopTimer();
+            setStatus("Gestopt!");
+            statusLabel.setForeground(new java.awt.Color(155, 0, 0));
+            statusChanger.setText("Hervat");
+        }
+
     }
 
-    public void stopButtonPressed() {
-        SimulatorModel.stopTimer();
-        setStatus("Gepauseerd!");
-        statusLabel.setForeground(new java.awt.Color(255, 0, 0));
-    }
-
-    public void statsButtonPressed() {
+    private void statsButtonPressed() {
         System.out.println("Werkt nog niet!");
     }
 
@@ -238,9 +221,9 @@ public class SimulatorView extends JFrame implements ActionListener {
 
     public void updateTicks() {
         tickAmountString = Integer.toString(Simulator.getTicks());
-        tickCounter.setText("Aantal ticks: " + tickAmountString);
+        tickCounter.setText("Aantal ticks: " + tickAmountString + " || Max ticks: " + Simulator.maxTicks);
     }
-    public void speedDownButtonPressed() {
+    private void speedDownButtonPressed() {
             currentSpeedStep--;
             SimulatorModel.checkSpeed();
         if (currentSpeedStep == 0) {
@@ -248,7 +231,7 @@ public class SimulatorView extends JFrame implements ActionListener {
         }
     }
 
-    public void speedUpButtonPressed() {
+    private void speedUpButtonPressed() {
             currentSpeedStep++;
             SimulatorModel.checkSpeed();
             if (currentSpeedStep == 8) {
@@ -261,7 +244,7 @@ public class SimulatorView extends JFrame implements ActionListener {
     public void updateView() {
         carParkView.updateView();
     }
-    
+
 	public int getNumberOfFloors() {
         return numberOfFloors;
     }
@@ -277,7 +260,7 @@ public class SimulatorView extends JFrame implements ActionListener {
     public int getNumberOfOpenSpots(){
     	return numberOfOpenSpots;
     }
-    
+
     public LegacyCar getCarAt(Location location) {
         if (!locationIsValid(location)) {
             return null;

@@ -30,7 +30,7 @@ public class Simulator extends SimulatorModel {
     int exitSpeed = 5; // number of cars that can leave per minute
 
     static int tickAmount = 0;
-    int maxTicks = 10000;
+    static int maxTicks = 10000;
 
     protected static Timer tickTimer;
 
@@ -45,7 +45,7 @@ public class Simulator extends SimulatorModel {
         ////// TIMER CODE START
         tickTimer = new Timer(1, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (tickAmount <= maxTicks) {
+                if (tickAmount < maxTicks) {
                     tick();
                     tickAmount++;
                     simulatorView.updateTicks();
