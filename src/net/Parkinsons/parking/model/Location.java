@@ -1,5 +1,13 @@
 package net.Parkinsons.parking.model;
 
 public class Location {
-    // TODO: Coordinates
+    public final int i;
+    public final int j;
+    public final int k;
+
+    public Location(int i, int j, int k) {
+        this.i = i;
+        this.j = j;
+        this.k = k;
+    }
 }
