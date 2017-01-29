@@ -1,15 +1,22 @@
 package net.Parkinsons.parking.model;
+
 import java.util.Objects;
 
 // TODO: Implement
 public class GarageImpl implements Garage {
     private Car[][][] Cars;
 
-    private Location findSpot (Car Car) {
+    public GarageImpl(int floors, int rows, int places) {
+        assert floors > 0 && rows > 0 && places > 0;
+        Cars = new Car[floors][rows][places];
+
+    }
+
+    private Location findSpot(Car car) {
         for (int i = 0; i < Cars.length; i++) {
-            for (int j = 0; j <Cars[i].length ; j++) {
+            for (int j = 0; j < Cars[i].length; j++) {
                 for (int k = 0; k < Cars[i][j].length; k++) {
-                    if (Objects.equals(Car, Cars[i][j][k])){
+                    if (Objects.equals(car, Cars[i][j][k])) {
                         return new Location(i, j, k);
                     }
                 }
@@ -18,14 +25,28 @@ public class GarageImpl implements Garage {
         return null;
     }
 
-    @Override
-    public boolean addCar(Car car) {
-        return false;
+    private boolean setCarAt(Car car, Location location) {
+        if (location != null) {
+            Cars[location.i][location.j][location.k] = car;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Location addCar(Car car) {
+        Location location = findSpot(null);
+        setCarAt(car, location);
+        return location;
     }
 
     @Override
-    public boolean removeCar(Car car) {
-        return false;
+    public Location removeCar(Car car) {
+        Location location = findSpot(car);
+        if (location != null) {
+            setCarAt(null, location);
+        }
+        return location;
     }
 
     @Override
@@ -44,14 +65,10 @@ public class GarageImpl implements Garage {
     }
 
     @Override
-    public Car setCarAt(Location location) {
+    private boolean getCarAt(Location location) {
         return null;
     }
 
-    @Override
-    public Location  addCar (Car car ) {
-        Location Location = findSpot  (null);
-        setCarAt(car, Location);
-        return Location;
-    }
+
+}
 }

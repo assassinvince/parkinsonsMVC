@@ -6,14 +6,14 @@ public interface Garage {
      * @param car
      * @return
      */
-    boolean addCar(Car car);
+    Location addCar(Car car);
 
     /**
      * Remove a car from the garage
      * @param car
      * @return
      */
-    boolean removeCar(Car car);
+    Location removeCar(Car car);
 
     /**
      * Get the number of floors in this garage
