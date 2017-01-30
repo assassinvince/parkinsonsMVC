@@ -3,7 +3,7 @@ import javax.swing.*;
 /**
  * Created by wesle on 28-1-2017.
  */
-public class SimulatorModel extends CarQueue {
+public class SimulatorModel {
     private Simulator simulator;
     private SimulatorView simulatorView;
     private CarQueue carQueue;
@@ -11,6 +11,9 @@ public class SimulatorModel extends CarQueue {
     private int day = 1;
     private int hour = 12;
     private int minute = 0;
+
+    private static int totalTicks;
+    private static int ticksToReach;
 
     protected static String cDay;
 
@@ -23,33 +26,41 @@ public class SimulatorModel extends CarQueue {
 
     public static void stopTimer() {  Simulator.tickTimer.stop(); }
 
+    public static void eOneTick() {
+
+    }
+
+    public void updateTicks() {
+        ticksToReach++;
+    }
+
 
     public static void checkSpeed() {
-          if (SimulatorView.currentSpeedStep == 1) {
-              Simulator.tickDelay = 500;
+        if (SimulatorView.currentSpeedStep == 1) {
+            Simulator.tickDelay = 500;
             SimulatorView.currentSpeed = "0.25x ";
         }
-          else if (SimulatorView.currentSpeedStep == 2) {
+        else if (SimulatorView.currentSpeedStep == 2) {
             Simulator.tickDelay = 250;
             SimulatorView.currentSpeed = "0.50x ";
         }
-          else if (SimulatorView.currentSpeedStep == 3) {
-              Simulator.tickDelay = 125;
-              SimulatorView.currentSpeed = "1.0x ";
-          }
-          else if (SimulatorView.currentSpeedStep == 4) {
+        else if (SimulatorView.currentSpeedStep == 3) {
+            Simulator.tickDelay = 125;
+            SimulatorView.currentSpeed = "1.0x ";
+        }
+        else if (SimulatorView.currentSpeedStep == 4) {
             Simulator.tickDelay = 50;
             SimulatorView.currentSpeed = "2.0x ";
         } else if (SimulatorView.currentSpeedStep == 5) {
             Simulator.tickDelay = 20;
             SimulatorView.currentSpeed = "5.0x ";
         } else if (SimulatorView.currentSpeedStep == 6) {
-              Simulator.tickDelay = 5;
-              SimulatorView.currentSpeed = "10.0x ";
+            Simulator.tickDelay = 5;
+            SimulatorView.currentSpeed = "10.0x ";
         } else if (SimulatorView.currentSpeedStep == 7) {
-              Simulator.tickDelay = 1;
+            Simulator.tickDelay = 1;
             SimulatorView.currentSpeed = "50.0x ";
-    }
+        }
         SimulatorView.speedIndicator.setText("Huidige snelheid: " + SimulatorView.currentSpeed);
         Simulator.tickTimer.setDelay(Simulator.tickDelay);
     }
@@ -95,5 +106,5 @@ public class SimulatorModel extends CarQueue {
 
     }
 
-    }
+}
 

@@ -1,9 +1,15 @@
 import javax.swing.*;
+import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.text.NumberFormat;
+import java.awt.event.KeyEvent;
 
-public class SimulatorView extends JFrame implements ActionListener {
+import static java.lang.Boolean.TRUE;
+
+public class SimulatorView extends javax.swing.JFrame implements ActionListener {
     private CarParkView carParkView;
     private Simulator simulator;
     private CarQueue carQueue;
@@ -63,7 +69,12 @@ public class SimulatorView extends JFrame implements ActionListener {
 
     // ---- VIEW  section ---- //
     protected JLabel statusLabel;
+    private JLabel ticksToReach;
     private JButton statusChanger;
+    private JFormattedTextField customTickAmount;
+    private JButton executeTicks;
+    private int ticksToReachInt = 100;
+    private Boolean customTicksActive = false;
     private Boolean whichStatus = false;
     protected JLabel tickCounter;
     protected static JLabel parkedCars;
@@ -104,17 +115,37 @@ public class SimulatorView extends JFrame implements ActionListener {
         statusChanger.setForeground(new Color( 255, 255, 255));
 
         statusLabel = new JLabel("Status: Actief   ");
-        statusLabel.setForeground(new java.awt.Color(0, 155, 0));
+        statusLabel.setForeground(new Color(0, 155, 0));
 
-        time = new JLabel("");
+        executeTicks = new JButton("100 tick");
+        executeTicks.addActionListener(e -> hundredTicksButtonPressed());
+        executeTicks.setBackground(new Color(92, 92, 92));
+        executeTicks.setForeground(new Color( 255, 255, 255));
 
-
+        ticksToReach = new JLabel(tickAmountString);
         tickCounter = new JLabel(tickAmountString);
 
+        NumberFormat format = NumberFormat.getInstance();
+        NumberFormatter formatter = new NumberFormatter(format);
+        formatter.setValueClass(Integer.class);
+        formatter.setMinimum(1);
+        formatter.setMaximum(100000);
+        formatter.setAllowsInvalid(false);
+        // If you want the value to be committed on each keystroke instead of focus lost
+        formatter.setCommitsOnValidEdit(false);
+        customTickAmount = new JFormattedTextField(formatter);
+        customTickAmount.setColumns(7);
+        customTickAmount.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent evt) {
+                customTickAmountKeyTyped(evt);
+            }
+        });;
         buttonPanel.add(statusLabel);
         buttonPanel.add(statusChanger);
         buttonPanel.add(tickCounter);
-        buttonPanel.add(time);
+        buttonPanel.add(customTickAmount);
+        buttonPanel.add(executeTicks);
+        buttonPanel.add(ticksToReach); ticksToReach.setVisible(false);
 
         add(buttonPanel);
     }
@@ -184,11 +215,23 @@ public class SimulatorView extends JFrame implements ActionListener {
         sideBar.add(carQueue);
         sideBar.add(configButton);
         add(sideBar);
-        }
+    }
 
     // ---- end VIEW section ---- //
 
     // ---- CONTROLLER section ---- //
+
+    public void customTickAmountKeyTyped(java.awt.event.KeyEvent evt) {
+        char enter = evt.getKeyChar();
+        if(!(Character.isAlphabetic(enter))){
+            ticksToReachInt = 1;
+            ticksToReach.setVisible(false);
+            if (whichStatus == false) {
+                statusChangerButtonPressed();
+                customTicksActive = false;
+            }
+        }
+    }
 
     public static void setTime(String string) {
         time.setText(string);
@@ -221,20 +264,46 @@ public class SimulatorView extends JFrame implements ActionListener {
     public void updateTicks() {
         tickAmountString = Integer.toString(Simulator.getTicks());
         tickCounter.setText("Aantal ticks: " + tickAmountString + " || Max ticks: " + Simulator.maxTicks);
+
+        if (customTicksActive == TRUE) {
+            String ticksToReachString = Integer.toString(ticksToReachInt);
+            ticksToReachInt--;
+            ticksToReach.setText(ticksToReachString);
+            if (ticksToReachInt < 0) {
+                customTicksActive = false;
+                ticksToReach.setVisible(false);
+                SimulatorModel.stopTimer();
+                if (whichStatus == false) {
+                    statusChangerButtonPressed();
+                }
+            }
+        }
     }
     private void speedDownButtonPressed() {
-            currentSpeedStep--;
-            SimulatorModel.checkSpeed();
+        currentSpeedStep--;
+        SimulatorModel.checkSpeed();
         if (currentSpeedStep == 0) {
             currentSpeedStep = currentSpeedStep +1;
         }
     }
 
     private void speedUpButtonPressed() {
-            currentSpeedStep++;
-            SimulatorModel.checkSpeed();
-            if (currentSpeedStep == 8) {
-                currentSpeedStep = currentSpeedStep -1;
+        currentSpeedStep++;
+        SimulatorModel.checkSpeed();
+        if (currentSpeedStep == 8) {
+            currentSpeedStep = currentSpeedStep -1;
+        }
+    }
+
+    private void hundredTicksButtonPressed() {
+        if (!customTicksActive) {
+            if (whichStatus == true) {
+                statusChangerButtonPressed();
+            }
+            SimulatorModel.startTimer();
+            ticksToReachInt = (Integer) customTickAmount.getValue() -1;
+            customTicksActive = true;
+            ticksToReach.setVisible(true);
         }
     }
 
@@ -244,7 +313,7 @@ public class SimulatorView extends JFrame implements ActionListener {
         carParkView.updateView();
     }
 
-	public int getNumberOfFloors() {
+    public int getNumberOfFloors() {
         return numberOfFloors;
     }
 
@@ -257,7 +326,7 @@ public class SimulatorView extends JFrame implements ActionListener {
     }
 
     public int getNumberOfOpenSpots(){
-    	return numberOfOpenSpots;
+        return numberOfOpenSpots;
     }
 
     public LegacyCar getCarAt(Location location) {
