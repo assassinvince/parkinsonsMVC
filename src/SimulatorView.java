@@ -31,9 +31,24 @@ public class SimulatorView extends javax.swing.JFrame implements ActionListener 
         this.numberOfRows = numberOfRows;
         this.numberOfPlaces = numberOfPlaces;
         this.numberOfOpenSpots =numberOfFloors*numberOfRows*numberOfPlaces;
-
-        parkViewWidth = 900;
-        parkViewHeight = 400;
+        int totalSize = numberOfFloors + numberOfRows;
+        
+        if (totalSize < 12) {
+            parkViewWidth = 900;
+        } else {
+            parkViewWidth = numberOfFloors * numberOfRows * 33;
+        }
+        
+        if (numberOfPlaces < 25) {
+            parkViewHeight = 400;  
+        } else {
+            parkViewHeight = numberOfPlaces * 13;
+        }
+        
+        System.out.println("Floor = " + numberOfFloors +
+                            "\n rows = " + numberOfRows +
+                            "\n places = " + numberOfPlaces);
+        
         frameWidth = parkViewWidth + 165;
         frameHeight = parkViewHeight + 70;
         legacyCars = new LegacyCar[numberOfFloors][numberOfRows][numberOfPlaces];
@@ -44,7 +59,7 @@ public class SimulatorView extends javax.swing.JFrame implements ActionListener 
 
         Container contentPane = getContentPane();
         contentPane.add(carParkView, BorderLayout.CENTER);
-        carParkView.setBounds(0, 0, parkViewWidth, parkViewHeight ); // TODO: ERVOOR ZORGEN DAT DE GROOTTE ZICH AANPAST OP DE HOEVEELHEID VERDIEPINGEN / FLOORS / PLACES.
+        carParkView.setBounds(0, 0, parkViewWidth, parkViewHeight ); // TODO: ERVOOR ZORGEN DAT DE GROOTE ZICH AANPAST OP DE HOEVEELHEID VERDIEPINGEN / FLOORS / PLACES.
         pack();
         addControlPanel(); // VOEGT DE KNOPPEN TOE
         addSpeedController(); // VOEGT SNELHEIDS REGELAARS TOE
@@ -78,16 +93,11 @@ public class SimulatorView extends javax.swing.JFrame implements ActionListener 
     private Boolean whichStatus = false;
     protected JLabel tickCounter;
     protected static JLabel parkedCars;
-    protected static JLabel freeSpots;
     protected static JLabel time;
     protected static JLabel speedIndicator;
     protected String tickAmountString;
     protected static int currentSpeedStep;
     protected static String currentSpeed;
-    protected String carsEnteredString;
-    protected JLabel carsSinceStart;
-    protected String carsParkedString;
-    protected String openSpotsString;
 
     private void setEssentials() { // Bepaald de window size gebasseerd op de grote van de carParkView + 100.
         setTitle("Parking Simulator v0.1");
@@ -122,7 +132,7 @@ public class SimulatorView extends javax.swing.JFrame implements ActionListener 
         statusLabel = new JLabel("Status: Actief   ");
         statusLabel.setForeground(new Color(0, 155, 0));
 
-        executeTicks = new JButton("Aantal ticks");
+        executeTicks = new JButton("100 tick");
         executeTicks.addActionListener(e -> hundredTicksButtonPressed());
         executeTicks.setBackground(new Color(92, 92, 92));
         executeTicks.setForeground(new Color( 255, 255, 255));
@@ -191,9 +201,7 @@ public class SimulatorView extends javax.swing.JFrame implements ActionListener 
         add(speedPanel);
     }
 
-    public void addStats() {
-//        carsEnteredString = Integer.toString(Simulator.getCarsEntered());
-
+    private void addStats() {
 
         int sideBarLocationY = parkViewHeight - 390;
         int sideBarLocationX = parkViewWidth + 10;
@@ -214,15 +222,12 @@ public class SimulatorView extends javax.swing.JFrame implements ActionListener 
 
         time = new JLabel("");
         parkedCars = new JLabel("geparkeerde auto's:  ");
-        freeSpots = new JLabel("vrije plekken: ");
+        JLabel freeSpots = new JLabel("vrije plekken: <>    ");
         JLabel carQueue = new JLabel("In de rij:  <>   ");
-        carsSinceStart = new JLabel("Totaal auto's: ");
-
         sideBar.add(time);
         sideBar.add(parkedCars);
         sideBar.add(freeSpots);
         sideBar.add(carQueue);
-        sideBar.add(carsSinceStart);
         sideBar.add(configButton);
         add(sideBar);
     }
@@ -233,10 +238,9 @@ public class SimulatorView extends javax.swing.JFrame implements ActionListener 
 
     public void customTickAmountKeyTyped(java.awt.event.KeyEvent evt) {
         char enter = evt.getKeyChar();
-        if(!(Character.isAlphabetic(enter)) && customTicksActive == TRUE){
+        if(!(Character.isAlphabetic(enter))){
             ticksToReachInt = 1;
             ticksToReach.setVisible(false);
-            customTicksActive = false;
             if (whichStatus == false) {
                 statusChangerButtonPressed();
                 customTicksActive = false;
@@ -290,22 +294,6 @@ public class SimulatorView extends javax.swing.JFrame implements ActionListener 
             }
         }
     }
-
-    public void updateCarsEntered() {
-        carsEnteredString = Integer.toString(Simulator.getCarsEntered());
-        carsSinceStart.setText("Totaal auto's: " +carsEnteredString);
-    }
-
-    public void updateCarsParked() {
-        carsParkedString = Integer.toString(Simulator.getCarsParked());
-        parkedCars.setText("geparkeerde auto's: " + carsParkedString);
-    }
-
-    public void updateOpenSpots() {
-        openSpotsString = Integer.toString(numberOfOpenSpots);
-        freeSpots.setText("vrije plekken: " + openSpotsString);
-    }
-
     private void speedDownButtonPressed() {
         currentSpeedStep--;
         SimulatorModel.checkSpeed();
@@ -371,7 +359,6 @@ public class SimulatorView extends javax.swing.JFrame implements ActionListener 
         if (oldLegacyCar == null) {
             legacyCars[location.getFloor()][location.getRow()][location.getPlace()] = legacyCar;
             legacyCar.setLocation(location);
-            //misschien hier parkedCars incrementen, dan weghalen uit de simulator? Of zo beter vanwege MVC?
             numberOfOpenSpots--;
             return true;
         }
