@@ -49,7 +49,6 @@ public class Simulator extends SimulatorModel {
                     tick();
                     tickAmount++;
                     simulatorView.updateTicks();
-                    updateTicks();
                 }
             }
         });
@@ -64,7 +63,7 @@ public class Simulator extends SimulatorModel {
     }
 
 
-    public void tick() {
+    private void tick() {
     	advanceTime();
     	handleExit();
     	updateViews();
