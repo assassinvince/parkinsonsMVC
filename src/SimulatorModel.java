@@ -3,7 +3,7 @@ import javax.swing.*;
 /**
  * Created by wesle on 28-1-2017.
  */
-public class SimulatorModel extends CarQueue {
+public class SimulatorModel {
     private Simulator simulator;
     private SimulatorView simulatorView;
     private CarQueue carQueue;
@@ -11,6 +11,9 @@ public class SimulatorModel extends CarQueue {
     private int day = 1;
     private int hour = 12;
     private int minute = 0;
+
+    private static int totalTicks;
+    private static int ticksToReach;
 
     protected static String cDay;
 
@@ -22,6 +25,14 @@ public class SimulatorModel extends CarQueue {
     }
 
     public static void stopTimer() {  Simulator.tickTimer.stop(); }
+
+    public static void eOneTick() {
+
+    }
+
+    public void updateTicks() {
+        ticksToReach++;
+    }
 
 
     public static void checkSpeed() {
