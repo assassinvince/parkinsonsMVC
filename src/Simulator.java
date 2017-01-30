@@ -34,6 +34,10 @@ public class Simulator extends SimulatorModel {
 
     protected static Timer tickTimer;
 
+    static int carsEntered;         //houd bij hoeveel auto's ingereden zijn (precies: door de entrancequeue heengekomen zijn).
+    static int carsLeft;
+
+
     public Simulator() {
 
         entranceCarQueue = new CarQueue();
@@ -41,6 +45,9 @@ public class Simulator extends SimulatorModel {
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
         simulatorView = new SimulatorView(3, 6, 30);
+        carsEntered = 0;        //totaal aantal autos die zijn ingereden sinds start simulatie.
+        carsLeft = 0;
+
 
         ////// TIMER CODE START
         tickTimer = new Timer(1, new ActionListener() {
@@ -49,6 +56,9 @@ public class Simulator extends SimulatorModel {
                     tick();
                     tickAmount++;
                     simulatorView.updateTicks();
+                    simulatorView.updateCarsEntered();      //update CarsEntered method called bij elke tick, zodat hij in de view geupdate word.
+                    simulatorView.updateCarsParked();       //update CarsParked. Berekent hoeveel autos er nu in staan.
+                    simulatorView.updateOpenSpots();        //update de open spots.
                     updateTicks();
                 }
             }
@@ -61,6 +71,14 @@ public class Simulator extends SimulatorModel {
 
     public static int getTicks() {
         return tickAmount;
+    }
+
+    public static int getCarsEntered() {        //zodat we de info in SimulatorView kunnen updaten.
+        return carsEntered;
+    }
+
+    public static int getCarsParked(){          //berekent aantal auto's in de parkeergarage op dat moment, returned dit.
+        return (carsEntered - carsLeft);
     }
 
 
@@ -106,6 +124,8 @@ public class Simulator extends SimulatorModel {
             Location freeLocation = simulatorView.getFirstFreeLocation();
             simulatorView.setCarAt(freeLocation, legacyCar);
             i++;
+            carsEntered++;                  //increment voor de counter, totaal aantal autos die zijn ingereden sinds start simulatie.
+
         }
     }
 
@@ -141,6 +161,8 @@ public class Simulator extends SimulatorModel {
         while (exitCarQueue.carsInQueue()>0 && i < exitSpeed){
             exitCarQueue.removeCar();
             i++;
+            carsLeft++;
+
         }
     }
 
