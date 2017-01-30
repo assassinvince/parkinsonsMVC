@@ -238,9 +238,10 @@ public class SimulatorView extends javax.swing.JFrame implements ActionListener 
 
     public void customTickAmountKeyTyped(java.awt.event.KeyEvent evt) {
         char enter = evt.getKeyChar();
-        if(!(Character.isAlphabetic(enter))){
+        if(!(Character.isAlphabetic(enter)) && customTicksActive == TRUE){
             ticksToReachInt = 1;
             ticksToReach.setVisible(false);
+            customTicksActive = false;
             if (whichStatus == false) {
                 statusChangerButtonPressed();
                 customTicksActive = false;
