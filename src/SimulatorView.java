@@ -36,7 +36,7 @@ public class SimulatorView extends javax.swing.JFrame implements ActionListener 
         if (totalSize < 12) {
             parkViewWidth = 900;
         } else {
-            parkViewWidth = numberOfFloors * numberOfRows * 33;
+            parkViewWidth = numberOfFloors * numberOfRows * 36;
         }
         
         if (numberOfPlaces < 25) {
@@ -215,7 +215,6 @@ public class SimulatorView extends javax.swing.JFrame implements ActionListener 
         sideBar.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         sideBar.setLayout(new FlowLayout(FlowLayout.LEFT));
         sideBar.setBounds(sideBarLocationX, sideBarLocationY, 150, 400);
-        sideBar.setBackground(Color.WHITE);
 
         JButton configButton = new JButton("Configuratie Menu");
         configButton.addActionListener(new ActionListener() {

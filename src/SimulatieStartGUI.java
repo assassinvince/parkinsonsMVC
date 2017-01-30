@@ -41,7 +41,7 @@ public class SimulatieStartGUI extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
         jPanel1.setLayout(null);
 
-        jLabel1.setFont(new java.awt.Font("DooM", 0, 17)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("DooM", 0, 13)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Parkin'Sons Simulator");
@@ -75,7 +75,7 @@ public class SimulatieStartGUI extends javax.swing.JFrame {
         jPanel1.add(startSimulation);
         startSimulation.setBounds(70, 210, 140, 32);
 
-        placeInput.setText("0");
+        placeInput.setText("35");
         placeInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 placeInputActionPerformed(evt);
@@ -89,7 +89,7 @@ public class SimulatieStartGUI extends javax.swing.JFrame {
         jPanel1.add(placeInput);
         placeInput.setBounds(170, 140, 30, 30);
 
-        rowsInput.setText("0");
+        rowsInput.setText("8");
         rowsInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rowsInputActionPerformed(evt);
@@ -103,7 +103,7 @@ public class SimulatieStartGUI extends javax.swing.JFrame {
         jPanel1.add(rowsInput);
         rowsInput.setBounds(170, 50, 30, 30);
 
-        floorInput.setText("0");
+        floorInput.setText("3");
         floorInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 floorInputActionPerformed(evt);
