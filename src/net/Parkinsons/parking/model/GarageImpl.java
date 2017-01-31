@@ -3,7 +3,7 @@ package net.Parkinsons.parking.model;
 import java.util.Objects;
 
 // TODO: Implement
-public class GarageImpl implements Garage {
+public class GarageImpl extends Garage {
     private final int floors;
     private final int rows;
     private final int places;

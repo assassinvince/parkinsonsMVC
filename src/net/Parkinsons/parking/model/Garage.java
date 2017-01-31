@@ -1,42 +1,63 @@
 package net.Parkinsons.parking.model;
 
-public interface Garage {
+import net.Parkinsons.parking.view.View;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class Garage {
     /**
      * Add a car to the garage
      * @param car
      * @return
      */
-    Location addCar(Car car);
+   public abstract Location addCar(Car car);
 
     /**
      * Remove a car from the garage
      * @param car
      * @return
      */
-    Location removeCar(Car car);
+  public  abstract Location removeCar(Car car);
 
     /**
      * Get the number of floors in this garage
      * @return
      */
-    int getNumberOfFloors();
+  public  abstract int getNumberOfFloors();
 
     /**
      * Get the number of rows per floor of the garage
      * @return
      */
-    int getNumberOfRowsPerFloor();
+  public  abstract int getNumberOfRowsPerFloor();
 
     /**
      * Get the number of places per row of the garage
      * @return
      */
-    int getNumberOfPlacesPerRow();
+   public  abstract int getNumberOfPlacesPerRow();
 
     /**
      * Gets the car at the specified Location
      * @param location Location to look up
      * @return Car at the location or null if the place specified by this location is empty
      */
-    Car getCarAt(Location location);
+  public abstract   Car getCarAt(Location location);
+
+
+
+    private List<View> views;
+
+    public Garage(){
+        views = new ArrayList<View>();
+    }
+
+    public void addView(View view){
+        views.add(view);
+}
+
+    public void notifyViews(){
+        for(View v: views) v.updateView();
+    }
 }
