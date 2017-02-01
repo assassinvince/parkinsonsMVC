@@ -1,3 +1,5 @@
+package net.Parkinsons.parking;
+
 public class SimulatieStartGUI extends javax.swing.JFrame {
 
     /**
@@ -156,14 +158,14 @@ public class SimulatieStartGUI extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Parkin'Sons Simulator");
+        jLabel1.setText("Parkin'Sons net.Parkinsons.parking.Simulator");
         jPanel1.add(jLabel1Shadow);
         jLabel1.setBounds(-64, 10, 620, 50);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(153, 213, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Parkin'Sons Simulator");
+        jLabel1.setText("Parkin'Sons net.Parkinsons.parking.Simulator");
         jPanel1.add(jLabel1);
         jLabel1.setBounds(-70, 10, 620, 50);
 
@@ -282,7 +284,7 @@ public class SimulatieStartGUI extends javax.swing.JFrame {
                 System.out.println("ERROR");
             } else {
 
-                Simulator simulator = new Simulator();
+              //create new simulator//
             }
         } catch(IllegalArgumentException e)
         {
@@ -438,8 +440,8 @@ public class SimulatieStartGUI extends javax.swing.JFrame {
     private javax.swing.JTextField vehiclesPerMinute3;
     // End of variables declaration
     private javax.swing.JLabel jLabel1Shadow;
-    protected static int rowAmount;
-    protected static int placeAmount;
-    protected static int floorAmount;
-    private Simulator simulator;
+    public static int rowAmount;
+    public static int placeAmount;
+    public static int floorAmount;
+
 }

@@ -1,3 +1,7 @@
+package net.Parkinsons.parking;
+
+import net.Parkinsons.parking.model.Location;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -68,8 +72,8 @@ class CarParkView extends JPanel {
     private void drawPlace(Graphics graphics, Location location, Color color) {
         graphics.setColor(color);
         graphics.fillRect(
-                location.getFloor() * 260 + (1 + (int)Math.floor(location.getRow() * 0.5)) * 75 + (location.getRow() % 2) * 20,
-                60 + location.getPlace() * 10,
+                location.floor * 260 + (1 + (int)Math.floor(location.row * 0.5)) * 75 + (location.row % 2) * 20,
+                60 + location.place * 10,
                 20 - 1,
                 10 - 1); // TODO use dynamic size or constants
     }

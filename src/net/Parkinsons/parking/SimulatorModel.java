@@ -1,12 +1,13 @@
-import javax.swing.*;
+package net.Parkinsons.parking;
 
 /**
  * Created by wesle on 28-1-2017.
  */
+@Deprecated
 public class SimulatorModel {
-    private Simulator simulator;
-    private SimulatorView simulatorView;
-    private CarQueue carQueue;
+
+
+
 
     private int day = 1;
     private int hour = 12;

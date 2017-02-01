@@ -1,3 +1,8 @@
+package net.Parkinsons.parking;
+
+
+import net.Parkinsons.parking.model.Location;
+
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 import java.awt.*;
@@ -11,8 +16,8 @@ import static java.lang.Boolean.TRUE;
 
 public class SimulatorView extends javax.swing.JFrame implements ActionListener {
     private CarParkView carParkView;
-    private Simulator simulator;
-    private CarQueue carQueue;
+
+
     private int numberOfFloors;
     private int numberOfRows;
     private int numberOfPlaces;
@@ -105,7 +110,7 @@ public class SimulatorView extends javax.swing.JFrame implements ActionListener 
     protected String openSpotsString;
 
     private void setEssentials() { // Bepaald de window size gebasseerd op de grote van de carParkView + 100.
-        setTitle("Parking Simulator v0.1");
+        setTitle("Parking net.Parkinsons.parking.Simulator v0.1");
         setResizable(false);
         setBackground(new Color(112, 112, 112));
         setLayout(null);
@@ -207,7 +212,7 @@ public class SimulatorView extends javax.swing.JFrame implements ActionListener 
     }
 
     private void addStats() {
-//        carsEnteredString = Integer.toString(Simulator.getCarsEntered());
+//        carsEnteredString = Integer.toString(net.Parkinsons.parking.Simulator.getCarsEntered());
         int sideBarLocationY = parkViewHeight - 390;
         int sideBarLocationX = parkViewWidth + 10;
 
@@ -355,7 +360,7 @@ public class SimulatorView extends javax.swing.JFrame implements ActionListener 
         if (!locationIsValid(location)) {
             return null;
         }
-        return legacyCars[location.getFloor()][location.getRow()][location.getPlace()];
+        return legacyCars[location.floor][location.row][location.place];
     }
 
     public boolean setCarAt(Location location, LegacyCar legacyCar) {
@@ -364,7 +369,7 @@ public class SimulatorView extends javax.swing.JFrame implements ActionListener 
         }
         LegacyCar oldLegacyCar = getCarAt(location);
         if (oldLegacyCar == null) {
-            legacyCars[location.getFloor()][location.getRow()][location.getPlace()] = legacyCar;
+            legacyCars[location.floor][location.row][location.place] = legacyCar;
             legacyCar.setLocation(location);
             //misschien hier parkedCars incrementen, dan weghalen uit de simulator? Of zo beter vanwege MVC?
             numberOfOpenSpots--;
@@ -381,7 +386,7 @@ public class SimulatorView extends javax.swing.JFrame implements ActionListener 
         if (legacyCar == null) {
             return null;
         }
-        legacyCars[location.getFloor()][location.getRow()][location.getPlace()] = null;
+        legacyCars[location.floor][location.row][location.place] = null;
         legacyCar.setLocation(null);
         numberOfOpenSpots++;
         return legacyCar;
@@ -446,9 +451,9 @@ public class SimulatorView extends javax.swing.JFrame implements ActionListener 
     }
 
     private boolean locationIsValid(Location location) {
-        int floor = location.getFloor();
-        int row = location.getRow();
-        int place = location.getPlace();
+        int floor = location.floor;
+        int row = location.row;
+        int place = location.place;
         if (floor < 0 || floor >= numberOfFloors || row < 0 || row > numberOfRows || place < 0 || place > numberOfPlaces) {
             return false;
         }
@@ -526,8 +531,8 @@ public class SimulatorView extends javax.swing.JFrame implements ActionListener 
         private void drawPlace(Graphics graphics, Location location, Color color) {
             graphics.setColor(color);
             graphics.fillRect(
-                    location.getFloor() * 260 + (1 + (int)Math.floor(location.getRow() * 0.5)) * 75 + (location.getRow() % 2) * 20,
-                    60 + location.getPlace() * 10,
+                    location.floor * 260 + (1 + (int)Math.floor(location.row * 0.5)) * 75 + (location.row % 2) * 20,
+                    60 + location.place * 10,
                     20 - 1,
                     10 - 1); // TODO use dynamic size or constants
         }

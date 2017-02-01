@@ -1,7 +1,13 @@
+package net.Parkinsons.parking;
+
+import net.Parkinsons.parking.*;
+import net.Parkinsons.parking.model.Location;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.Random;
 import javax.swing.*;
+@Deprecated
 public class Simulator extends SimulatorModel {
 
     private static final String AD_HOC = "1";
@@ -74,7 +80,7 @@ public class Simulator extends SimulatorModel {
         return tickAmount;
     }
 
-    public static int getCarsEntered() {        //zodat we de info in SimulatorView kunnen updaten.
+    public static int getCarsEntered() {        //zodat we de info in net.Parkinsons.parking.SimulatorView kunnen updaten.
         return carsEntered;
     }
 

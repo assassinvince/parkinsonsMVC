@@ -1,9 +1,13 @@
+package net.Parkinsons.parking;
+
+import net.Parkinsons.parking.model.Location;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
+@Deprecated
 public abstract class LegacyCar {
 
     private Location location;
@@ -12,7 +16,7 @@ public abstract class LegacyCar {
     private boolean hasToPay;
 
     /**
-     * Constructor for objects of class LegacyCar
+     * Constructor for objects of class net.Parkinsons.parking.LegacyCar
      */
     public LegacyCar() {
 

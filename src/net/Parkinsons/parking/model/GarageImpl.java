@@ -33,7 +33,7 @@ public class GarageImpl extends Garage {
 
     private boolean setCarAt(Car car, Location location) {
         if (location != null) {
-            Cars[location.i][location.j][location.k] = car;
+            Cars[location.floor][location.row][location.place] = car;
             return true;
         } else {
             return false;
@@ -72,7 +72,7 @@ public class GarageImpl extends Garage {
 
     @Override
     public Car getCarAt(Location location) {
-        return Cars[location.i][location.j][location.k];
+        return Cars[location.floor][location.row][location.place];
 
     }
 }

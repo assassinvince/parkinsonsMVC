@@ -1,3 +1,7 @@
+package net.Parkinsons.parking;
+
+import net.Parkinsons.parking.LegacyCar;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
