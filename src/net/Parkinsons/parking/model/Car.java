@@ -6,4 +6,6 @@ public interface Car {
     long getTimeLeft();
 
     Location getLocation();
+
+    boolean decrementTime(int deltaTime);
 }

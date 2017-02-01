@@ -2,6 +2,7 @@ package net.Parkinsons.parking.model;
 
 import net.Parkinsons.parking.view.View;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,4 +61,9 @@ public abstract class Garage {
     public void notifyViews(){
         for(View v: views) v.updateView();
     }
+    /**
+     * Update the garage by the specified amount of time
+     * @param deltaTime Amount of time passed since the last update
+     */
+   public abstract void tick(int deltaTime);
 }

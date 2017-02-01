@@ -7,22 +7,22 @@ public class GarageImpl extends Garage {
     private final int floors;
     private final int rows;
     private final int places;
-    private Car[][][] Cars;
+    private Car[][][] cars;
 
     public GarageImpl(int floors, int rows, int places) {
         this.floors = floors;
         this.rows = rows;
         this.places = places;
         assert floors > 0 && rows > 0 && places > 0;
-        Cars = new Car[floors][rows][places];
+        cars = new Car[floors][rows][places];
 
     }
 
     private Location findSpot(Car car) {
-        for (int i = 0; i < Cars.length; i++) {
-            for (int j = 0; j < Cars[i].length; j++) {
-                for (int k = 0; k < Cars[i][j].length; k++) {
-                    if (Objects.equals(car, Cars[i][j][k])) {
+        for (int i = 0; i < cars.length; i++) {
+            for (int j = 0; j < cars[i].length; j++) {
+                for (int k = 0; k < cars[i][j].length; k++) {
+                    if (Objects.equals(car, cars[i][j][k])) {
                         return new Location(i, j, k);
                     }
                 }
@@ -33,7 +33,7 @@ public class GarageImpl extends Garage {
 
     private boolean setCarAt(Car car, Location location) {
         if (location != null) {
-            Cars[location.floor][location.row][location.place] = car;
+            cars[location.floor][location.row][location.place] = car;
             return true;
         } else {
             return false;
@@ -72,7 +72,26 @@ public class GarageImpl extends Garage {
 
     @Override
     public Car getCarAt(Location location) {
-        return Cars[location.floor][location.row][location.place];
+        return cars[location.floor][location.row][location.place];
+
+    }
+
+    /**
+     * Update the garage by the specified amount of time
+     *
+     * @param deltaTime Amount of time passed since the last update
+     */
+    public void tick(int deltaTime) {
+        for (Car[][] carArrayArray : cars) {
+            for (Car[] carArray : carArrayArray) {
+                for (Car car : carArray) {
+                    car.decrementTime(deltaTime);
+                }
+            }
+        }
+
+
+
 
     }
 }
