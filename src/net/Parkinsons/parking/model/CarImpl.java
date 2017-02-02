@@ -22,7 +22,7 @@ public class CarImpl implements Car {
 
     @Override
     public long getParkTime() {
-
+        return timeElapsed;
     }
 
     @Override
