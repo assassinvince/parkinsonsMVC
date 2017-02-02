@@ -12,6 +12,7 @@ public class CarImpl implements Car {
 
         this.totalTime = totalTime;
         this.parkingPass = parkingPass;
+        this.timeElapsed = timeElapsed;
     }
 
 
