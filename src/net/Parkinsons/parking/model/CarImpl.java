@@ -1,12 +1,14 @@
 package net.Parkinsons.parking.model;
 
+
 // TODO: Implement
 public class CarImpl implements Car {
 
     private int totalTime;
     private final boolean parkingPass;
+    private int timeElapsed;
 
-    public CarImpl(int totalTime, boolean parkingPass) {
+    public CarImpl(int totalTime, boolean parkingPass, int timeElapsed) {
 
         this.totalTime = totalTime;
         this.parkingPass = parkingPass;
@@ -15,12 +17,12 @@ public class CarImpl implements Car {
 
     @Override
     public boolean hasSubscribtion() {
-        return false;
+        return parkingPass;
     }
 
     @Override
     public long getParkTime() {
-        return 0;
+
     }
 
     @Override
