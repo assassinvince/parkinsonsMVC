@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.Random;
 import javax.swing.*;
+
 @Deprecated
 public class Simulator extends SimulatorModel {
 

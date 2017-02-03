@@ -1,5 +1,6 @@
 package net.Parkinsons.parking.model;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 // TODO: Implement
@@ -8,6 +9,9 @@ public class GarageImpl extends Garage {
     private final int rows;
     private final int places;
     private Car[][][] cars;
+    private static final int hourlyPrice = 2;
+    private int profit;
+
 
     public GarageImpl(int floors, int rows, int places) {
         this.floors = floors;
@@ -15,6 +19,7 @@ public class GarageImpl extends Garage {
         this.places = places;
         assert floors > 0 && rows > 0 && places > 0;
         cars = new Car[floors][rows][places];
+        profit = 0;
 
     }
 
@@ -51,6 +56,7 @@ public class GarageImpl extends Garage {
         Location location = findSpot(car);
         if (location != null) {
             setCarAt(null, location);
+            profit+=(car.getParkTime()/(60*60*1000))*hourlyPrice;
         }
         return location;
     }
@@ -85,13 +91,23 @@ public class GarageImpl extends Garage {
         for (Car[][] carArrayArray : cars) {
             for (Car[] carArray : carArrayArray) {
                 for (Car car : carArray) {
-                    car.decrementTime(deltaTime);
+                    if(car != null && car.decrementTime(deltaTime)){
+                        this.removeCar(car);
+                    }
                 }
             }
         }
+    }
 
-
-
-
+    public String toString() {
+        String s = "";
+        for (Car[][] car : cars) {
+            for (Car[] cars1 : car) {
+                s += (Arrays.toString(cars1) + ',');
+            }
+            s += ('\n');
+        }
+        s += "PROFIT: " + profit;
+        return s;
     }
 }

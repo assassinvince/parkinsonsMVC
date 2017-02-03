@@ -7,14 +7,16 @@ public class CarImpl implements Car {
     private int totalTime;
     private final boolean parkingPass;
     private int timeElapsed;
+    private Status status;
+    private Location location;
 
-    public CarImpl(int totalTime, boolean parkingPass, int timeElapsed) {
+    public CarImpl(int totalTime, boolean parkingPass) {
 
         this.totalTime = totalTime;
         this.parkingPass = parkingPass;
-        this.timeElapsed = timeElapsed;
+        timeElapsed = 0;
+        status = Status.ENTERING;
     }
-
 
     @Override
     public boolean hasSubscribtion() {
@@ -28,17 +30,49 @@ public class CarImpl implements Car {
 
     @Override
     public long getTimeLeft() {
-        return 0;
+        return (totalTime - timeElapsed);
     }
 
     @Override
     public Location getLocation() {
-        return null;
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    /**
+     *
+     */
+    @Override
+    public boolean decrementTime(int deltaTime) {
+        timeElapsed += deltaTime;
+        return totalTime - timeElapsed < 0;
+    }
+
+    public void setStatus(Status status){
+        this.status = status;
     }
 
     @Override
-    public boolean decrementTime(int deltaTime) {
-        totalTime -= deltaTime;
-        return totalTime < 0;
+    public Status getStatus(){
+        return status;
+    }
+
+
+    public enum Status {
+        ENTERING, PARKED, EXIT_QUEUE, EXIT_WAIT
+    }
+
+    public String toString() {
+        String s = "";
+        if (hasSubscribtion()) {
+            s += "S:";
+        } else {
+            s += "P:";
+        }
+        s += ((double) (getTimeLeft() / 1000)/(60*60));
+        return s;
     }
 }
